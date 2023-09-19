@@ -75,15 +75,46 @@ class Reviewer(Mentor):
         res = f'Имя: {self.name}\nФамилия: {self.surname}'
         return res
 
+def average_grade_hw(students, course):
+    grades_hw = []
+    for student in students:
+        if course in student.grades:
+            grades_hw += student.grades[course]
+    if grades_hw:
+        return sum(grades_hw)/len(grades_hw)
+    else:
+        return 0
+
+def average_grade_lecture(lecturers, course):
+    grades_lecture = []
+    for lecturer in lecturers:
+        if course in lecturer.grades:
+            grades_lecture += lecturer.grades[course]
+    if grades_lecture:
+        return sum(grades_lecture)/len(grades_lecture)
+    else:
+        return 0
 
 student_1 = Student('Влада', 'Коинова', 'ж')
 student_1.courses_in_progress += ['Python', 'GIT', 'Figma']
+student_2 = Student('Денис', 'Мухин', 'м')
+student_2.courses_in_progress += ['Python', 'GIT']
 
 lecturer_1 = Lecturer('Сергей', 'Иванов')
 lecturer_1.courses_attached += ['Python']
+lecturer_2 = Lecturer('Мария', 'Лотова')
+lecturer_2.courses_attached += ['GIT']
 
 reviewer_1 = Reviewer('Полина', 'Кошкина')
-reviewer_1.courses_attached += ['GIT']
+reviewer_1.courses_attached += ['Python']
+reviewer_2 = Reviewer('Сергей', 'Яковлев')
+reviewer_2.courses_attached += ['GIT']
 
-student_1.rate_lecturer(lecturer_1, 'Python', 9)
-reviewer_1.rate_hw(student_1, 'GIT', 10)
+reviewer_1.rate_hw(student_1,'Python', 5)
+reviewer_1.rate_hw(student_2, 'Python', 10)
+
+student_1.rate_lecturer(lecturer_1,'Python',7)
+student_2.rate_lecturer(lecturer_1,'Python',10)
+
+print(average_grade_hw([student_1, student_2], 'Python'))
+print(average_grade_lecture([lecturer_1,lecturer_2],'Python'))
