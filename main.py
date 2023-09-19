@@ -16,6 +16,17 @@ class Student:
         else:
             return 'Ошибка'
 
+    def _average_grade(self):
+        average_grades = [sum(el)/len(el) for el in self.grades.values()]
+        return sum(average_grades)/len(average_grades)
+
+    def __str__(self):
+        res = (
+            f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self._average_grade()}\n'
+            f'Курсы в процессе изучения: {", ".join(self.courses_in_progress)}\nЗавершенные курсы: {", ".join(self.finished_courses)}'
+        )
+        return res
+
 
 class Mentor:
     def __init__(self, name, surname):
@@ -26,6 +37,14 @@ class Mentor:
 
 class Lecturer(Mentor):
     grades = {}
+
+    def _average_grade(self):
+        average_grades = [sum(el)/len(el) for el in self.grades.values()]
+        return sum(average_grades)/len(average_grades)
+
+    def __str__(self):
+        res = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self._average_grade()}'
+        return res
 
 
 class Reviewer(Mentor):
@@ -38,6 +57,10 @@ class Reviewer(Mentor):
         else:
             return 'Ошибка'
 
+    def __str__(self):
+        res = f'Имя: {self.name}\nФамилия: {self.surname}'
+        return res
+
 
 student_1 = Student('Влада', 'Коинова', 'ж')
 student_1.courses_in_progress += ['Python', 'GIT', 'Figma']
@@ -49,11 +72,9 @@ reviewer_1 = Reviewer('Полина', 'Кошкина')
 reviewer_1.courses_attached += ['GIT']
 
 student_1.rate_lecturer(lecturer_1, 'Python', 9)
-
 reviewer_1.rate_hw(student_1, 'GIT', 10)
 
-print(lecturer_1.grades)
-print(student_1.grades)
-
-
+print(student_1)
+print(lecturer_1)
+print(reviewer_1)
 
