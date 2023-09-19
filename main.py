@@ -75,6 +75,7 @@ class Reviewer(Mentor):
         res = f'Имя: {self.name}\nФамилия: {self.surname}'
         return res
 
+
 def average_grade_hw(students, course):
     grades_hw = []
     for student in students:
@@ -97,24 +98,45 @@ def average_grade_lecture(lecturers, course):
 
 student_1 = Student('Влада', 'Коинова', 'ж')
 student_1.courses_in_progress += ['Python', 'GIT', 'Figma']
-student_2 = Student('Денис', 'Мухин', 'м')
+student_1.finished_courses += ['1С']
+student_2 = Student('Андрей', 'Вольский', 'м')
 student_2.courses_in_progress += ['Python', 'GIT']
+student_2.finished_courses += ['Аналитика']
 
 lecturer_1 = Lecturer('Сергей', 'Иванов')
 lecturer_1.courses_attached += ['Python']
 lecturer_2 = Lecturer('Мария', 'Лотова')
-lecturer_2.courses_attached += ['GIT']
+lecturer_2.courses_attached += ['Python','GIT']
 
 reviewer_1 = Reviewer('Полина', 'Кошкина')
 reviewer_1.courses_attached += ['Python']
 reviewer_2 = Reviewer('Сергей', 'Яковлев')
 reviewer_2.courses_attached += ['GIT']
 
-reviewer_1.rate_hw(student_1,'Python', 5)
-reviewer_1.rate_hw(student_2, 'Python', 10)
+#оценки за лекции
+student_1.rate_lecturer(lecturer_1, 'Python', 10)
+student_1.rate_lecturer(lecturer_2,'GIT', 9)
+student_1.rate_lecturer(lecturer_2, 'Python', 8)
+student_2.rate_lecturer(lecturer_1, 'Python', 8)
+student_2.rate_lecturer(lecturer_2, 'GIT', 7)
+student_2.rate_lecturer(lecturer_2, 'Python', 7)
 
-student_1.rate_lecturer(lecturer_1,'Python',7)
-student_2.rate_lecturer(lecturer_1,'Python',10)
+#оценки за ДЗ
+reviewer_1.rate_hw(student_1, 'Python', 10)
+reviewer_1.rate_hw(student_1, 'Python', 9)
+reviewer_1.rate_hw(student_2, 'Python', 7)
+reviewer_1.rate_hw(student_2, 'Python', 6)
+reviewer_2.rate_hw(student_1, 'GIT', 9)
+reviewer_2.rate_hw(student_2, 'GIT', 6)
 
+print(student_1)
+print(student_2)
+print(lecturer_1)
+print(lecturer_2)
+print(reviewer_1)
+print(reviewer_2)
+print(student_1 > student_2)
+print(lecturer_1 > lecturer_2)
+
+print(average_grade_lecture([lecturer_1,lecturer_2], 'Python'))
 print(average_grade_hw([student_1, student_2], 'Python'))
-print(average_grade_lecture([lecturer_1,lecturer_2],'Python'))
